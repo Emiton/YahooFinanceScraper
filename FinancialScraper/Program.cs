@@ -22,44 +22,54 @@ namespace FinancialScraper
                 // Click the sign in button
                 driver.FindElement(By.Id("uh-signedin")).Click();
 
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
 
                 // Find username login
-                IWebElement email = driver.FindElement(By.Id("login-username"));
-                email.SendKeys("YOUR_EMAIL");
-                try
-                {
-                    driver.FindElement(By.XPath("//*[@id=\"login-signin\"]")).Click();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("IT WAS NEVER CLICKED!");
-                }
-
-                Console.WriteLine("I GUESS WE CLICKED SOMETHING!");
-
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+                IWebElement email = driver.FindElement(By.Id("login-username"));
+                email.SendKeys("financetester321@gmail.com");
+                driver.FindElement(By.XPath("//*[@id=\"login-signin\"]")).Click();
+
+                Console.WriteLine("GOT THE EMAIL BABAYYYY!");
+
+
                 // Find password input
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
                 IWebElement password = driver.FindElement(By.Id("login-passwd"));
-
-                password.SendKeys("YOUR_PASSWORD");
+                password.SendKeys("thisisnew1234");
                 driver.FindElement(By.Id("login-signin")).Click();
+                Console.WriteLine("WE LOGGED IN!");
+
+                // Navigate to Homepage
+                driver.FindElement(By.XPath("//*[@id=\"Nav-0-DesktopNav\"]/div/div[3]/div/div[1]/ul/li[2]/a")).Click();
+
+                // Wait for pop-up then disable
+                var alert = driver.FindElement(By.XPath("//dialog[@id = '__dialog']/section/button"));
+                alert.Click();
+
+                // Navigate to Portfolio
+                driver.FindElement(By.XPath("//*[@id=\"main\"]/section/section/div[2]/table/tbody/tr[1]/td[1]/a")).Click();
+
+                driver.Manage().Window.Maximize();
+                Console.WriteLine("Ready to extract data");
 
 
-
-                // *A* Click the link to 'My Portfolio'
-                //driver.FindElement(By.XPath("//a[@href='/portfolios?bypass=true']")).Click();
-
-                //try
+                //var stocks = driver.FindElement(By.XPath("//*[@id=\"main\"]/section/section[2]/div[2]/table/tbody"));
+                //var i = 1;
+                //foreach (var row in stocks.FindElements(By.TagName("tr")))
                 //{
-                //    // *B* Click the sign in button
-                //    driver.FindElement(By.XPath("//*[@id='uh']/header/section/div[2]/a")).Click();
+                //    Console.WriteLine("STOCK # " + i);
+                //    foreach (var info in row.FindElements(By.TagName("td")))
+                //    {
+                //        Console.WriteLine(info.Text);
+                //    }
+                //    i++;
                 //}
-                //catch (Exception e)
-                //{
-                //    Console.WriteLine("IT NEVER FOUND THE SIGN IN BUTTON");
-                //}
-                // Reverse A and B
+
+                var stocks = driver.FindElements(By.XPath("//*[@id=\"main\"]/section/section[2]/div[2]/table/tbody/tr[*]/td[*]"));
+                foreach (var stock in stocks)
+                    Console.WriteLine(stock.Text);
+
+
             }
         }
     }
