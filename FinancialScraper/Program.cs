@@ -52,10 +52,10 @@ namespace FinancialScraper
                 driver.Manage().Window.Maximize();
                 Console.WriteLine("Ready to extract data");
 
-
-                //var stocks = driver.FindElement(By.XPath("//*[@id=\"main\"]/section/section[2]/div[2]/table/tbody"));
+                // GET INFO METHOD 1
+                //var table = driver.FindElement(By.XPath("//*[@id=\"main\"]/section/section[2]/div[2]/table/tbody"));
                 //var i = 1;
-                //foreach (var row in stocks.FindElements(By.TagName("tr")))
+                //foreach (var row in table.FindElements(By.TagName("tr")))
                 //{
                 //    Console.WriteLine("STOCK # " + i);
                 //    foreach (var info in row.FindElements(By.TagName("td")))
@@ -65,10 +65,24 @@ namespace FinancialScraper
                 //    i++;
                 //}
 
-                var stocks = driver.FindElements(By.XPath("//*[@id=\"main\"]/section/section[2]/div[2]/table/tbody/tr[*]/td[*]"));
-                foreach (var stock in stocks)
-                    Console.WriteLine(stock.Text);
+                // GET INFO METHOD 2
+                //var stocks = driver.FindElements(By.XPath("//*[@id=\"main\"]/section/section[2]/div[2]/table/tbody/tr[*]/td[*]"));
+                //foreach (var stock in stocks)
+                //    Console.WriteLine(stock.Text);
 
+
+                // GET INFO METHOD 3
+                // If info is not nested in <td>, then this method will not extract said info
+                //var table = driver.FindElement(By.XPath("//*[@id=\"main\"]/section/section[2]/div[2]/table/tbody"));
+                //var rows = table.FindElements(By.TagName("tr"));
+                //foreach (var row in rows)
+                //{
+                //    var columns = driver.FindElements(By.TagName("td"));
+                //    foreach (var column in columns)
+                //    {
+                //        Console.WriteLine(column.Text);
+                //    }
+                //}
 
             }
         }
